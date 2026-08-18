@@ -10,8 +10,8 @@ export class MultiplayerManager {
     if (!this.socket) {
       // Connect to local server for testing, or production server if deployed
       const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-      const serverUrl = isLocalhost ? 'http://localhost:3001' : 'https://keyboard-warrior-beat-your-friend.onrender.com';
-      
+      const serverUrl = isLocalhost ? 'http://localhost:3001' : 'https://keyrush.onrender.com';
+
       this.socket = io(serverUrl);
       this.setupListeners();
     }
@@ -47,7 +47,7 @@ export class MultiplayerManager {
     this.socket.on('opponent_disconnected', () => {
       this.onEvent('opponent_disconnected');
     });
-    
+
     this.socket.on('waiting', () => {
       this.onEvent('waiting');
     });
