@@ -183,7 +183,15 @@ function setupMultiplayer() {
   if (!multi) {
     multi = new MultiplayerManager((event, data) => {
       const status = document.getElementById('menu-status');
-      if (event === 'waiting') {
+      if (event === 'connecting') {
+        status.textContent = '⏳ Server se connect ho raha hai...';
+        status.style.color = '#f59e0b';
+      } else if (event === 'connected') {
+        status.style.color = '#22c55e';
+      } else if (event === 'connect_error') {
+        status.textContent = `❌ Server connect nahi hua: ${data}. Dobara try karein.`;
+        status.style.color = '#ef4444';
+      } else if (event === 'waiting') {
         status.textContent = 'Searching for an opponent...';
       } else if (event === 'joined') {
         status.textContent = `Joined Room: ${data.roomId}. Waiting for opponent...`;

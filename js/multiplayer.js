@@ -12,7 +12,14 @@ export class MultiplayerManager {
       const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
       const serverUrl = isLocalhost ? 'http://localhost:3001' : 'https://keyrush.onrender.com';
 
-      this.socket = io(serverUrl);
+      this.onEvent('connecting');
+
+      this.socket = io(serverUrl, {
+        transports: ['websocket', 'polling'],
+        reconnectionAttempts: 5,
+        reconnectionDelay: 2000,
+        timeout: 20000
+      });
       this.setupListeners();
     }
   }
@@ -50,6 +57,14 @@ export class MultiplayerManager {
 
     this.socket.on('waiting', () => {
       this.onEvent('waiting');
+    });
+
+    this.socket.on('connect_error', (err) => {
+      this.onEvent('connect_error', err.message);
+    });
+
+    this.socket.on('connect', () => {
+      this.onEvent('connected');
     });
   }
 
