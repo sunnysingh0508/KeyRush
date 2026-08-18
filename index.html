@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KeyRush</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://cdn.socket.io/4.8.1/socket.io.min.js"></script>
+</head>
+
+<body>
+
+  <!-- Menu Screen -->
+  <div id="menu-screen" class="flex flex-col items-center justify-center h-screen bg-light">
+    <div class="menu-card">
+
+      <div class="menu-logo-container">
+        <div class="menu-logo-icon">🖱️</div>
+        <div class="menu-logo-text" style="display: flex; align-items: baseline;">
+          <span class="text-keyboard">Key</span>
+          <span class="text-keyboard" style="color: #0f172a; margin-left: 2px;">Rush</span>
+        </div>
+      </div>
+
+      <div class="menu-section">
+        <label class="menu-label">YOUR NAME</label>
+        <input type="text" id="player-name-input" class="menu-input" value="Aman">
+      </div>
+
+      <div class="mode-selector">
+        <div class="mode-tab active" id="tab-bot">🤖 Vs Bot</div>
+        <div class="mode-tab" id="tab-room">👥 Room</div>
+        <div class="mode-tab" id="tab-random">🌐 Random</div>
+      </div>
+
+      <div id="room-controls" class="menu-section hidden" style="text-align: center;">
+        <button id="btn-create-room-ui" style="width: 100%; margin-bottom: 15px; padding: 14px; background: #22c55e; color: white; font-size: 1.1rem; font-weight: 900; border-radius: 12px; border: 3px solid #0f172a; box-shadow: 4px 4px 0px #0f172a; cursor: pointer; text-transform: uppercase; transition: transform 0.1s;">➕ Create Room</button>
+        
+        <div style="margin: 15px 0; font-weight: 900; color: #64748b; font-size: 0.9rem;">— OR JOIN EXISTING —</div>
+        
+        <label class="menu-label" style="text-align: left;">ENTER ROOM CODE</label>
+        <input type="text" id="room-code-input" class="menu-input" placeholder="e.g. ABCD">
+      </div>
+
+      <div class="menu-section" id="difficulty-section">
+        <label class="menu-label">SELECT DIFFICULTY</label>
+        <div class="difficulty-selector">
+          <div class="diff-btn" id="diff-easy">Easy</div>
+          <div class="diff-btn active" id="diff-medium">Medium</div>
+          <div class="diff-btn" id="diff-hard">Hard</div>
+        </div>
+      </div>
+
+      <button id="btn-start-fight" class="btn-start">⚔️ START FIGHT</button>
+
+      <div id="menu-status" style="margin-top: 1rem; color: #0f172a; font-weight: bold; text-align: center;"></div>
+    </div>
+  </div>
+
+  <!-- Battle Arena Screen -->
+  <div id="arena-screen" class="hidden">
+
+    <div class="hud">
+      <div>
+        <div id="player-name-label" class="health-label">PLAYER</div>
+        <div class="health-bar-container">
+          <div id="player-hp-bar" class="health-bar-fill"></div>
+          <div id="player-hp-text" class="health-text">100 / 100</div>
+        </div>
+      </div>
+      <div>
+        <div id="bot-name-label" class="health-label boss" style="text-align: right;">OPPONENT</div>
+        <div class="health-bar-container">
+          <div id="bot-hp-bar" class="health-bar-fill"></div>
+          <div id="bot-hp-text" class="health-text">100 / 100</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="combo-display" class="combo-display hidden">0x Combo!</div>
+
+    <div class="stage">
+      <div class="ground"></div>
+
+      <!-- Player -->
+      <div id="player-container" class="character-container" style="left: 15vw;">
+        <div class="speech-bubble">
+          <span id="player-typed" class="typed-text"></span><span id="player-error" class="error-text"></span><span
+            id="player-untyped" class="untyped-text">word</span>
+        </div>
+        <div id="player-sprite" class="character player anim-idle">
+          <div class="sprite-inner">🤺</div>
+        </div>
+      </div>
+
+      <!-- Bot -->
+      <div id="bot-container" class="character-container" style="right: 15vw;">
+        <div class="speech-bubble">
+          <span id="bot-typed" class="typed-text"></span><span id="bot-error" class="error-text"></span><span
+            id="bot-untyped" class="untyped-text">word</span>
+        </div>
+        <div id="bot-sprite" class="character bot anim-idle">
+          <div class="sprite-inner">🤺</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="countdown-overlay" class="overlay hidden">3</div>
+    <div id="level-clear-overlay" class="overlay hidden">LEVEL CLEARED!</div>
+  </div>
+
+  <!-- Game Over Screen -->
+  <div id="gameover-screen" class="hidden"
+    style="background: rgba(15,23,42,0.9); color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 100;">
+    <div id="gameover-title" style="font-size: 5rem; font-weight: 900; margin-bottom: 2rem;">VICTORY</div>
+    <button id="btn-back-menu" class="btn">Back to Menu</button>
+  </div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+
+</html>
